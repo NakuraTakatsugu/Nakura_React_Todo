@@ -14,16 +14,37 @@ export const App = () => {
     const newTodo = {
       value: text,
       id: new Date().getTime(),
+      checked: false,
+      removed: false
     };
 
     setTodos([newTodo, ...todos]);
     setText('');
   };
 
-  const handleOnEdit = (id = 0,value = '') => {
-    const newTodos = todos.map((todo) => {
+  const handleOnEdit = (id = 0, value = '',checked = false) => {
+    const deepCopy = todos.map((todo) => ({...todo }));
+
+    const newTodos = deepCopy.map((todo) => {
       if (todo.id === id) {
         todo.value = value;
+      }
+      return todo;
+    });
+
+    console.log('=== Original todos ===');
+    todos.map((todo) => console.log(`id: ${todo.id}, value: ${todo.value}`));
+
+
+    setTodos(newTodos);
+  }
+
+  const handleOnCheck = (id = 0, checked = undefined) => {
+    const deepCopy = todos.map((todo) => ({ ...todo }));
+
+    const newTodos = deepCopy.map((todo) => {
+      if (todo.id === id) {
+        todo.checked = !checked;
       }
       return todo;
     });
@@ -47,8 +68,14 @@ export const App = () => {
           return (
             <li key={todo.id}>
               <input
+                type="checkbox"
+                checked={todo.checked}
+                onChange ={(e)=> handleOnCheck(todo.id,todo.checked)}
+              />
+              <input
                 type="text"
                 value={todo.value}
+                disabled={todo.checked}
                 onChange={(e) => handleOnEdit(todo.id,e.target.value)}
               />
             </li>
