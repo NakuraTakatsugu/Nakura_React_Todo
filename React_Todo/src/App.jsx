@@ -1,4 +1,4 @@
-import {TodoList} from "./components/index";
+import {TodoList} from "./components/TodoList";
 
 export const App = () => {
   return (
