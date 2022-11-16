@@ -1,11 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+import { Filter, useFilter } from '../Filter';
 import { InputTodo } from '../InputTodo';
 import { TodoItem } from '../TodoItem';
 import { useInputTodo, useTodos } from './';
 
 export const TodoApp = () => {
   const { text, handleOnChange, handleReset } = useInputTodo();
+  const { filter, handleFilter } = useFilter();
   const {
     todos,
     handleOnSubmit,
@@ -14,8 +15,6 @@ export const TodoApp = () => {
     handleOnRemove,
     handleOnEmpty,
   } = useTodos();
-
-  const [filter, setFilter] = useState('all');
 
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
@@ -34,12 +33,7 @@ export const TodoApp = () => {
 
   return (
     <div>
-      <select defaultValue="all" onChange={(e) => setFilter(e.target.value)}>
-        <option value="all">すべてのタスク</option>
-        <option value="checked">完了したタスク</option>
-        <option value="unchecked">現在のタスク</option>
-        <option value="removed">ごみ箱</option>
-      </select>
+      <Filter onChange={handleFilter} />
       {filter === 'removed' ? (
         <button
           onClick={handleOnEmpty}
@@ -52,7 +46,10 @@ export const TodoApp = () => {
           <InputTodo
             text={text}
             onChange={handleOnChange}
-            onSubmit={handleOnSubmit}
+            onSubmit={(e) => {
+              handleOnSubmit(e, text);
+              handleReset();
+            }}
             handleReset={handleReset}
           />
         )
@@ -63,9 +60,9 @@ export const TodoApp = () => {
             <li key={todo.id}>
               <TodoItem
                 todo={todo}
-                handleOnCheck={handleOnCheck}
-                handleOnEdit={handleOnEdit}
-                handleOnRemove={handleOnRemove}
+                handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
+                handleOnEdit={(e) => handleOnEdit(todo.id, e.target.value)}
+                handleOnRemove={() => handleOnRemove(todo.id, todo.removed)}
               />
             </li>
           );
