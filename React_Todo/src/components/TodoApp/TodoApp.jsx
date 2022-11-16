@@ -1,8 +1,8 @@
 import React from 'react';
 import { Filter, useFilter } from '../Filter';
-import { InputTodo } from '../InputTodo';
+import { InputTodo, useInputTodo } from '../InputTodo';
 import { TodoItem } from '../TodoItem';
-import { useInputTodo, useTodos } from './';
+import { useTodos } from './';
 
 export const TodoApp = () => {
   const { text, handleOnChange, handleReset } = useInputTodo();
