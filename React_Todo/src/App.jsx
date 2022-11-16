@@ -1,8 +1,5 @@
-import {TodoList} from "./components/TodoList";
+import { TodoApp } from './components/TodoApp';
 
 export const App = () => {
-  return (
-    <div>
-      <TodoList />
-    </div>
-  )};
+  return <TodoApp />;
+};
