@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import useSWR from 'swr';
+import { fetcher } from '../../utils/api';
+
+export const useFetchTodos = () => {
+  const { data, error } = useSWR('/todos', fetcher);
+
+  return { data, error };
+};
 
 export const useTodos = () => {
   const [todos, setTodos] = useState(Array);
