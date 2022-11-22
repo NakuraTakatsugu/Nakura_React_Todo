@@ -3,9 +3,6 @@ import { Filter, useFilter } from '../Filter';
 import { InputTodo, useInputTodo } from '../InputTodo';
 import { TodoItem } from '../TodoItem';
 import { useTodos, useFetchTodos } from './';
-import { API_BASE_URL } from '../../config';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 export const TodoApp = () => {
   // const { text, handleOnChange, handleReset } = useInputTodo();
@@ -69,9 +66,9 @@ export const TodoApp = () => {
         <li key={todo.id}>
           <TodoItem
             todo={todo}
-            handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
-            handleOnEdit={(e) => handleOnEdit(todo.id, e.target.value)}
-            handleOnRemove={() => handleOnRemove(todo.id, todo.removed)}
+            // handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
+            // handleOnEdit={(e) => handleOnEdit(todo.id, e.target.value)}
+            // handleOnRemove={() => handleOnRemove(todo.id, todo.removed)}
           />
         </li>
       );

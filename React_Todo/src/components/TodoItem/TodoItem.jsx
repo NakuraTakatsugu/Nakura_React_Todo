@@ -1,8 +1,8 @@
 export const TodoItem = ({
   todo,
-  handleOnCheck,
-  handleOnEdit,
-  handleOnRemove,
+  // handleOnCheck,
+  // handleOnEdit,
+  // handleOnRemove,
 }) => {
   return (
     <>
@@ -14,7 +14,7 @@ export const TodoItem = ({
       />
       <input
         type="text"
-        value={todo.value}
+        value={todo.title}
         disabled={todo.checked || todo.removed}
         onChange={handleOnEdit}
       />
