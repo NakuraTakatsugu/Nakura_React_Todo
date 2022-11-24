@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "run-p -l -c dev:*",
     "dev:vite": "vite",
-    "dev:api": "npx json-server db.json",
+    "dev:api": "npx json-server db.json --routes routes.json",
     "build": "vite build",
     "preview": "vite preview"
   },

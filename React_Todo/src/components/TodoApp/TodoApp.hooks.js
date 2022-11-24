@@ -1,84 +1,97 @@
-import { useState } from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../../utils/api';
+import { fetcher, createTodo, updateTodo } from '../../utils/api';
 
+// TODO一覧を取得する
 export const useFetchTodos = () => {
   const { data, error } = useSWR('/todos', fetcher);
 
   return { data, error };
 };
 
-export const useTodos = () => {
-  const [todos, setTodos] = useState(Array);
+// IDのTODOを取得する
+export const useFetchTodo = (id) => {
+  const { data, error, mutate } = useSWR(`/todos/${id}`, fetcher);
 
-  const handleOnSubmit = (e, text) => {
+  return { data, error, mutate };
+};
+
+// 新規TODOを作成する
+export const useCreateTodo = () => {
+  const { data, mutate } = useSWR('/todos', fetcher);
+
+  const handleOnSubmit = async (e, text) => {
     e.preventDefault();
 
     if (!text) return;
 
     const newTodo = {
-      value: text,
-      id: new Date().getTime(),
-      checked: false,
-      removed: false,
+      title: text,
+      isCompleted: false,
+      isDiscarded: false,
+      isChecked: false,
     };
 
-    setTodos([newTodo, ...todos]);
+    try {
+      await createTodo(newTodo);
+      mutate([...data, newTodo]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleOnEdit = (id = Number, value = String) => {
-    const deepCopy = todos.map((todo) => ({ ...todo }));
-
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.value = value;
-      }
-      return todo;
-    });
-
-    console.log('=== Original todos ===');
-    todos.map((todo) => console.log(`id: ${todo.id}, value: ${todo.value}`));
-
-    setTodos(newTodos);
-  };
-
-  const handleOnCheck = (id = Number, checked = Boolean) => {
-    const deepCopy = todos.map((todo) => ({ ...todo }));
-
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.checked = !checked;
-      }
-      return todo;
-    });
-
-    setTodos(newTodos);
-  };
-
-  const handleOnRemove = (id = Number, removed = Boolean) => {
-    const deepCopy = todos.map((todo) => ({ ...todo }));
-
-    const newTodos = deepCopy.map((todo) => {
-      if (todo.id === id) {
-        todo.removed = !removed;
-      }
-      return todo;
-    });
-
-    setTodos(newTodos);
-  };
-
-  const handleOnEmpty = () => {
-    const newTodos = todos.filter((todo) => !todo.removed);
-    setTodos(newTodos);
-  };
-
-  return {
-    todos,
-    handleOnSubmit,
-    handleOnEdit,
-    handleOnCheck,
-    handleOnRemove,
-    handleOnEmpty,
-  };
+  return handleOnSubmit;
 };
+
+export const useUpdateTodo = () => {
+  const handleOnEdit = async (todo, value) => {
+    const updatedTodo = { ...todo, title: value };
+
+    try {
+      await updateTodo(todo.id, updatedTodo);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return handleOnEdit;
+};
+
+const handleOnCheck = (id = Number, checked = Boolean) => {
+  const deepCopy = todos.map((todo) => ({ ...todo }));
+
+  const newTodos = deepCopy.map((todo) => {
+    if (todo.id === id) {
+      todo.checked = !checked;
+    }
+    return todo;
+  });
+
+  setTodos(newTodos);
+};
+
+const handleOnRemove = (id = Number, removed = Boolean) => {
+  const deepCopy = todos.map((todo) => ({ ...todo }));
+
+  const newTodos = deepCopy.map((todo) => {
+    if (todo.id === id) {
+      todo.removed = !removed;
+    }
+    return todo;
+  });
+
+  setTodos(newTodos);
+};
+
+const handleOnEmpty = () => {
+  const newTodos = todos.filter((todo) => !todo.removed);
+  setTodos(newTodos);
+};
+
+// return {
+//   todos,
+//   handleOnSubmit,
+//   handleOnEdit,
+//   handleOnCheck,
+//   handleOnRemove,
+//   handleOnEmpty,
+// };
