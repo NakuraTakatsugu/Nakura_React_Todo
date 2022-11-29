@@ -3,7 +3,6 @@
     {
       "isCompleted": false,
       "isDiscarded": false,
-      "isChecked": false,
       "id": 1,
       "title": "todo 1dkk"
     },
@@ -11,29 +10,31 @@
       "title": "todo 2",
       "isCompleted": false,
       "isDiscarded": false,
-      "isChecked": false,
       "id": 2
     },
     {
       "id": 3,
       "title": "todo 3",
       "isCompleted": false,
-      "isDiscarded": false,
-      "isChecked": false
+      "isDiscarded": true
     },
     {
-      "title": "todo 4",
+      "title": "ddd",
       "isCompleted": false,
-      "isDiscarded": false,
-      "isChecked": false,
+      "isDiscarded": true,
       "id": 4
     },
     {
-      "title": "terst",
+      "title": "fdsa",
       "isCompleted": false,
-      "isDiscarded": false,
-      "isChecked": false,
+      "isDiscarded": true,
       "id": 5
+    },
+    {
+      "title": "fsad",
+      "isCompleted": false,
+      "isDiscarded": true,
+      "id": 6
     }
   ]
 }

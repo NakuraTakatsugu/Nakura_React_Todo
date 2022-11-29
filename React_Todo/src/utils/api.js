@@ -9,7 +9,6 @@ export const createTodo = (todo) => {
     title: todo.title,
     isCompleted: todo.isCompleted,
     isDiscarded: todo.isDiscarded,
-    isChecked: todo.isChecked,
   });
 };
 
@@ -20,5 +19,15 @@ export const updateTodo = (todo, value) => {
 };
 
 export const deleteTodo = (todo) => {
-  axios.delete(`${API_BASE_URL}/todos/${todo.id}`);
+  axios.put(`${API_BASE_URL}/todos/${todo.id}/discard`, {
+    ...todo,
+    isDiscarded: true,
+  });
+};
+
+export const restoreTodo = (todo) => {
+  axios.put(`${API_BASE_URL}/todos/${todo.id}/restore`, {
+    ...todo,
+    isDiscarded: false,
+  });
 };

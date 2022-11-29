@@ -1,26 +1,40 @@
+import { useToggle } from '../../hooks/useToggle';
+
 export const TodoItem = ({
   todo,
   // handleOnCheck,
-  // handleOnRemove,
+  handleDelete,
   handleUpdate,
-  id,
 }) => {
+  const [on, handleToggle] = useToggle();
+
+  console.log(on);
   return (
-    <>
-      {/* <input
+    <div>
+      <input
         type="checkbox"
         disabled={todo.isDiscarded}
-        checked={todo.isChecked}
-        onChange={handleOnCheck}
-      /> */}
-      <input
-        type="text"
-        value={todo.title}
-        id={id}
-        disabled={todo.isChecked || todo.isDiscarded}
-        onChange={handleUpdate}
+        checked={on}
+        onChange={handleToggle}
+        value={on}
       />
-      <button>{todo.isDiscarded ? '復元' : '削除'}</button>
-    </>
+      {on ? (
+        <>
+          <input
+            type="text"
+            value={todo?.title}
+            disabled={todo?.isChecked || todo?.isDiscarded}
+            onChange={handleUpdate}
+          />
+          {todo?.isDiscarded ? (
+            <button onClick={handleDelete}>復元</button>
+          ) : (
+            <button onClick={handleDelete}>削除</button>
+          )}
+        </>
+      ) : (
+        <span>{todo?.title}</span>
+      )}
+    </div>
   );
 };

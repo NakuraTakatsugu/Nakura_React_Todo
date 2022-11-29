@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { fetcher, createTodo, updateTodo, deleteTodo } from '../utils/api';
 
 export const useTodo = () => {
-  const { data, error, mutate } = useSWR('/todos', fetcher);
+  const { data: todos, error, mutate } = useSWR('/todos', fetcher);
 
   const handleSubmit = async (e, text) => {
     e.preventDefault();
@@ -17,8 +17,8 @@ export const useTodo = () => {
     };
 
     try {
-      await createTodo(newTodo);
-      mutate([...data, newTodo]);
+      const res = await createTodo(newTodo);
+      mutate([...todos, res]);
     } catch (err) {
       console.error(err);
     }
@@ -33,10 +33,30 @@ export const useTodo = () => {
   };
 
   const handleDelete = async (todo) => {
-    const res = await deleteTodo(todo);
-
-    mutate(data.filter((todo) => todo.id !== res.id));
+    try {
+      const res = await deleteTodo(todo);
+      mutate([...todos, res]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  return { data, error, handleSubmit, handleUpdate, handleDelete };
+  const handleRestore = async (todo) => {
+    try {
+      const res = await deleteTodo(todo);
+      mutate([...todos, res]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return {
+    todos,
+    error,
+    mutate,
+    handleSubmit,
+    handleUpdate,
+    handleDelete,
+    handleRestore,
+  };
 };
