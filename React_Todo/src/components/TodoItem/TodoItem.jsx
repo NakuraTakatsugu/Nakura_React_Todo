@@ -1,35 +1,26 @@
-import { useFetchTodo } from '../TodoApp';
-
 export const TodoItem = ({
   todo,
   // handleOnCheck,
-  handleOnEdit,
   // handleOnRemove,
+  handleUpdate,
   id,
 }) => {
-  // const { data, mutate } = useFetchTodo(todo.id);
-  // mutate({ ...data, todo });
-
   return (
     <>
-      <input
+      {/* <input
         type="checkbox"
         disabled={todo.isDiscarded}
         checked={todo.isChecked}
-        // onChange={handleOnCheck}
-      />
+        onChange={handleOnCheck}
+      /> */}
       <input
         type="text"
         value={todo.title}
         id={id}
         disabled={todo.isChecked || todo.isDiscarded}
-        onChange={handleOnEdit}
+        onChange={handleUpdate}
       />
-      <button
-      // onClick={handleOnRemove}
-      >
-        {todo.isDiscarded ? '復元' : '削除'}
-      </button>
+      <button>{todo.isDiscarded ? '復元' : '削除'}</button>
     </>
   );
 };

@@ -13,11 +13,12 @@ export const createTodo = (todo) => {
   });
 };
 
-export const updateTodo = (id, todo) => {
-  axios.put(`${API_BASE_URL}/todos/${id}`, {
-    title: todo.title,
-    isCompleted: todo.isCompleted,
-    isDiscarded: todo.isDiscarded,
-    isChecked: todo.isChecked,
-  });
+export const updateTodo = (todo, value) => {
+  const updatedTodo = { ...todo, title: value };
+
+  axios.put(`${API_BASE_URL}/todos/${todo.id}`, updatedTodo);
+};
+
+export const deleteTodo = (todo) => {
+  axios.delete(`${API_BASE_URL}/todos/${todo.id}`);
 };

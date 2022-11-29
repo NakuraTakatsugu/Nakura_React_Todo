@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTodo } from '../../hooks/useTodo';
 import { Filter, useFilter } from '../Filter';
 import { InputTodo, useInputTodo } from '../InputTodo';
 import { TodoItem } from '../TodoItem';
@@ -7,9 +8,15 @@ import { useCreateTodo, useUpdateTodo, useFetchTodos, useFetchTodo } from './';
 export const TodoApp = () => {
   const { text, handleOnChange, handleReset } = useInputTodo();
   // const { filter, handleFilter } = useFilter();
-  const handleOnSubmit = useCreateTodo();
-  const handleOnEdit = useUpdateTodo();
-  const { data: todos, error } = useFetchTodos();
+  const {
+    data: todos,
+    error,
+    handleSubmit,
+    handleUpdate,
+    handleDelete,
+  } = useTodo();
+
+  console.log(todos);
 
   // const filteredTodos = todos.filter((todo) => {
   //   switch (filter) {
@@ -25,9 +32,6 @@ export const TodoApp = () => {
   //       return todo;
   //   }
   // });
-
-  if (error) return <div>Error</div>;
-  if (!todos) return <div>Loading...</div>;
 
   return (
     //  <div>
@@ -56,8 +60,8 @@ export const TodoApp = () => {
       <InputTodo
         text={text}
         onChange={handleOnChange}
-        onSubmit={(e) => {
-          handleOnSubmit(e, text);
+        onSubmit={async (e) => {
+          await handleSubmit(e, text);
           handleReset();
         }}
       />
@@ -68,11 +72,9 @@ export const TodoApp = () => {
               <TodoItem
                 todo={todo}
                 id={todo.id}
+                handleUpdate={(e) => handleUpdate(e, todo)}
                 // handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
-                handleOnEdit={async (e) => {
-                  await handleOnEdit(todo, e.target.value);
-                }}
-                // handleOnRemove={() => handleOnRemove(todo.id, todo.removed)}
+                handleDelete={() => handleOnRemove(todo.id, todo.removed)}
               />
             </li>
           );
