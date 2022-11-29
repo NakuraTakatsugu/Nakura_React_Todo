@@ -1,0 +1,4 @@
+{
+  "/todos/:id/complete": "/todos/:id",
+  "/todos/:id/discard": "/todos/:id"
+}
