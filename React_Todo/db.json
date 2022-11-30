@@ -1,10 +1,10 @@
 {
   "todos": [
     {
-      "isCompleted": false,
-      "isDiscarded": false,
+      "isCompleted": true,
+      "isDiscarded": true,
       "id": 1,
-      "title": "todo 1dkk"
+      "title": "todo 1dkkddhddhff"
     },
     {
       "title": "todo 2",
@@ -17,24 +17,6 @@
       "title": "todo 3",
       "isCompleted": false,
       "isDiscarded": true
-    },
-    {
-      "title": "ddd",
-      "isCompleted": false,
-      "isDiscarded": true,
-      "id": 4
-    },
-    {
-      "title": "fdsa",
-      "isCompleted": false,
-      "isDiscarded": true,
-      "id": 5
-    },
-    {
-      "title": "fsad",
-      "isCompleted": false,
-      "isDiscarded": true,
-      "id": 6
     }
   ]
 }

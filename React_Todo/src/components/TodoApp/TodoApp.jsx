@@ -15,7 +15,8 @@ export const TodoApp = () => {
     error,
     handleSubmit,
     handleUpdate,
-    handleDelete,
+    handleComplete,
+    handleDiscard,
     handleRestore,
   } = useTodo();
 
@@ -24,9 +25,9 @@ export const TodoApp = () => {
       case 'all':
         return todo;
       case 'completed':
-        return todo?.isCompleted && !todo?.isDiscarded;
+        return todo?.isCompleted;
       case 'uncompleted':
-        return !todo?.isCompleted && !todo?.isDiscarded;
+        return !todo?.isCompleted;
       case 'discarded':
         return todo?.isDiscarded;
       default:
@@ -68,8 +69,8 @@ export const TodoApp = () => {
                 <TodoItem
                   todo={todo}
                   handleUpdate={(e) => handleUpdate(e, todo)}
-                  // handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
-                  handleDelete={() => handleDelete(todo)}
+                  handleComplete={() => handleComplete(todo)}
+                  handleDiscard={() => handleDiscard(todo)}
                   handleRestore={() => handleRestore(todo)}
                 />
               </li>

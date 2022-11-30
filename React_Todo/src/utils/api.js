@@ -18,7 +18,14 @@ export const updateTodo = (todo, value) => {
   axios.put(`${API_BASE_URL}/todos/${todo.id}`, updatedTodo);
 };
 
-export const deleteTodo = (todo) => {
+export const completeTodo = (todo) => {
+  axios.put(`${API_BASE_URL}/todos/${todo.id}/complete`, {
+    ...todo,
+    isCompleted: true,
+  });
+};
+
+export const discardTodo = (todo) => {
   axios.put(`${API_BASE_URL}/todos/${todo.id}/discard`, {
     ...todo,
     isDiscarded: true,

@@ -1,5 +1,12 @@
 import useSWR from 'swr';
-import { fetcher, createTodo, updateTodo, deleteTodo } from '../utils/api';
+import {
+  fetcher,
+  createTodo,
+  updateTodo,
+  discardTodo,
+  completeTodo,
+  restoreTodo,
+} from '../utils/api';
 
 export const useTodo = () => {
   const { data: todos, error, mutate } = useSWR('/todos', fetcher);
@@ -26,16 +33,29 @@ export const useTodo = () => {
 
   const handleUpdate = async (e, todo) => {
     try {
-      await updateTodo(todo, e.target.value);
+      const res = await updateTodo(todo, e.target.value);
+      const filteredTodos = todos.filter((t) => t.id !== todo.id);
+      mutate([...filteredTodos, res]);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleDelete = async (todo) => {
+  const handleComplete = async (todo) => {
     try {
-      const res = await deleteTodo(todo);
-      mutate([...todos, res]);
+      const res = await completeTodo(todo);
+      const filteredTodos = todos.filter((t) => t.id !== todo.id);
+      mutate([...filteredTodos, res]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDiscard = async (todo) => {
+    try {
+      const res = await discardTodo(todo);
+      const filteredTodos = todos.filter((t) => t.id !== todo.id);
+      mutate([...filteredTodos, res]);
     } catch (err) {
       console.error(err);
     }
@@ -43,8 +63,9 @@ export const useTodo = () => {
 
   const handleRestore = async (todo) => {
     try {
-      const res = await deleteTodo(todo);
-      mutate([...todos, res]);
+      const res = await restoreTodo(todo);
+      const filteredTodos = todos.filter((t) => t.id !== todo.id);
+      mutate([...filteredTodos, res]);
     } catch (err) {
       console.error(err);
     }
@@ -56,7 +77,8 @@ export const useTodo = () => {
     mutate,
     handleSubmit,
     handleUpdate,
-    handleDelete,
+    handleComplete,
+    handleDiscard,
     handleRestore,
   };
 };
