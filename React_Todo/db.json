@@ -2,13 +2,13 @@
   "todos": [
     {
       "isCompleted": true,
-      "isDiscarded": true,
+      "isDiscarded": false,
       "id": 1,
       "title": "todo 1dkkddhddhff"
     },
     {
       "title": "todo 2",
-      "isCompleted": false,
+      "isCompleted": true,
       "isDiscarded": false,
       "id": 2
     },
@@ -17,6 +17,24 @@
       "title": "todo 3",
       "isCompleted": false,
       "isDiscarded": true
+    },
+    {
+      "title": "fsd",
+      "isCompleted": false,
+      "isDiscarded": false,
+      "id": 4
+    },
+    {
+      "title": "fdsaa",
+      "isCompleted": false,
+      "isDiscarded": false,
+      "id": 5
+    },
+    {
+      "title": "fdsadod",
+      "isCompleted": false,
+      "isDiscarded": false,
+      "id": 6
     }
   ]
 }

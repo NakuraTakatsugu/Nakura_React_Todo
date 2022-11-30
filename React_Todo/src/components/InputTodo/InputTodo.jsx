@@ -1,8 +1,14 @@
+import { Input, Button, Flex } from '@chakra-ui/react';
+
 export const InputTodo = ({ text, onChange, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
-      <input type="text" value={text} onChange={onChange} />
-      <input type="submit" value="追加" onSubmit={onSubmit} />
+      <Flex alignItems="center" justifyContent="center" gap="4">
+        <Input type="text" value={text} onChange={onChange} />
+        <Button type="submit" colorScheme="teal" size="sm" onSubmit={onSubmit}>
+          追加
+        </Button>
+      </Flex>
     </form>
   );
 };

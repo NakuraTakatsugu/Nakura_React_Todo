@@ -35,7 +35,7 @@ export const useTodo = () => {
     try {
       const res = await updateTodo(todo, e.target.value);
       const filteredTodos = todos.filter((t) => t.id !== todo.id);
-      mutate([...filteredTodos, res]);
+      mutate([...filteredTodos, res], false);
     } catch (err) {
       console.error(err);
     }
@@ -45,7 +45,7 @@ export const useTodo = () => {
     try {
       const res = await completeTodo(todo);
       const filteredTodos = todos.filter((t) => t.id !== todo.id);
-      mutate([...filteredTodos, res]);
+      mutate([...filteredTodos, res], false);
     } catch (err) {
       console.error(err);
     }
@@ -55,7 +55,7 @@ export const useTodo = () => {
     try {
       const res = await discardTodo(todo);
       const filteredTodos = todos.filter((t) => t.id !== todo.id);
-      mutate([...filteredTodos, res]);
+      mutate([...filteredTodos, res], false);
     } catch (err) {
       console.error(err);
     }
@@ -65,7 +65,7 @@ export const useTodo = () => {
     try {
       const res = await restoreTodo(todo);
       const filteredTodos = todos.filter((t) => t.id !== todo.id);
-      mutate([...filteredTodos, res]);
+      mutate([...filteredTodos, res], false);
     } catch (err) {
       console.error(err);
     }

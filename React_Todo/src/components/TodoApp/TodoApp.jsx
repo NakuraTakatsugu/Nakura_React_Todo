@@ -4,6 +4,7 @@ import { useFilter } from '../../hooks/useFilter';
 import { Filter } from '../Filter';
 import { InputTodo } from '../InputTodo';
 import { useInputTodo } from '../../hooks/useInputTodo';
+import { Container, List, ListItem } from '@chakra-ui/react';
 
 import { TodoItem } from '../TodoItem';
 
@@ -40,7 +41,7 @@ export const TodoApp = () => {
   if (error) return <div>error</div>;
 
   return (
-    <div>
+    <Container>
       <Filter onChange={handleFilter} />
       {filter === 'discarded' ? (
         <button
@@ -61,23 +62,21 @@ export const TodoApp = () => {
           />
         )
       )}
-      <div>
-        <ul>
-          {filteredTodos.map((todo) => {
-            return (
-              <li key={todo?.id}>
-                <TodoItem
-                  todo={todo}
-                  handleUpdate={(e) => handleUpdate(e, todo)}
-                  handleComplete={() => handleComplete(todo)}
-                  handleDiscard={() => handleDiscard(todo)}
-                  handleRestore={() => handleRestore(todo)}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </div>
+      <List>
+        {filteredTodos.map((todo) => {
+          return (
+            <ListItem key={todo?.id} gap="4">
+              <TodoItem
+                todo={todo}
+                handleUpdate={(e) => handleUpdate(e, todo)}
+                handleComplete={() => handleComplete(todo)}
+                handleDiscard={() => handleDiscard(todo)}
+                handleRestore={() => handleRestore(todo)}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+    </Container>
   );
 };

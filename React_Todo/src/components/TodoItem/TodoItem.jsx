@@ -1,8 +1,8 @@
 import { useToggle } from '../../hooks/useToggle';
+import { Checkbox, Flex, Button, Input } from '@chakra-ui/react';
 
 export const TodoItem = ({
   todo,
-  // handleOnCheck,
   handleDiscard,
   handleUpdate,
   handleComplete,
@@ -12,21 +12,29 @@ export const TodoItem = ({
 
   console.log(on);
   return (
-    <div>
-      <input type="checkbox" checked={on} onChange={handleToggle} value={on} />
+    <Flex gap="3">
+      <Checkbox checked={on} onChange={handleToggle} value={on} />
       {on ? (
         <>
-          <input type="text" value={todo?.title} onChange={handleUpdate} />
-          {!todo?.isCompleted && <button onClick={handleComplete}>完了</button>}
+          <Input type="text" value={todo?.title} onChange={handleUpdate} />
+          {!todo?.isCompleted && (
+            <Button size="sm" onClick={handleComplete}>
+              完了
+            </Button>
+          )}
           {todo?.isDiscarded ? (
-            <button onClick={handleRestore}>復元</button>
+            <Button size="sm" onClick={handleRestore}>
+              復元
+            </Button>
           ) : (
-            <button onClick={handleDiscard}>削除</button>
+            <Button size="sm" onClick={handleDiscard}>
+              削除
+            </Button>
           )}
         </>
       ) : (
         <span>{todo?.title}</span>
       )}
-    </div>
+    </Flex>
   );
 };
