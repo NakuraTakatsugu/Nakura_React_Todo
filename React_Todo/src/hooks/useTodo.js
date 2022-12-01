@@ -6,6 +6,7 @@ import {
   discardTodo,
   completeTodo,
   restoreTodo,
+  deleteTodo,
 } from '../utils/api';
 
 export const useTodo = () => {
@@ -71,14 +72,23 @@ export const useTodo = () => {
     }
   };
 
+  const handleAllDelete = async () => {
+    try {
+      const res = await Promise.all(todos.map((t) => deleteTodo(t)));
+      mutate([...todos, res]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
     todos,
     error,
-    mutate,
     handleSubmit,
     handleUpdate,
     handleComplete,
     handleDiscard,
     handleRestore,
+    handleAllDelete,
   };
 };

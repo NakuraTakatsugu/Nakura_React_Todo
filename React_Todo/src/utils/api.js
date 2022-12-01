@@ -38,3 +38,7 @@ export const restoreTodo = (todo) => {
     isDiscarded: false,
   });
 };
+
+export const deleteTodo = (todo) => {
+  axios.delete(`${API_BASE_URL}/todos/${todo.id}/restore`);
+};

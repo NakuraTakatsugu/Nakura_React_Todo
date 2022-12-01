@@ -4,7 +4,7 @@ import { useFilter } from '../../hooks/useFilter';
 import { Filter } from '../Filter';
 import { InputTodo } from '../InputTodo';
 import { useInputTodo } from '../../hooks/useInputTodo';
-import { Container, List, ListItem } from '@chakra-ui/react';
+import { Container, List, ListItem, Flex } from '@chakra-ui/react';
 
 import { TodoItem } from '../TodoItem';
 
@@ -19,6 +19,7 @@ export const TodoApp = () => {
     handleComplete,
     handleDiscard,
     handleRestore,
+    handleAllDelete,
   } = useTodo();
 
   const filteredTodos = todos?.filter((todo) => {
@@ -42,41 +43,43 @@ export const TodoApp = () => {
 
   return (
     <Container>
-      <Filter onChange={handleFilter} />
-      {filter === 'discarded' ? (
-        <button
-          // onClick={handleOnEmpty}
-          disabled={todos?.filter((todo) => todo.isDiscarded).length === 0}
-        >
-          ごみ箱を空にする
-        </button>
-      ) : (
-        filter !== 'completed' && (
-          <InputTodo
-            text={text}
-            onChange={handleOnChange}
-            onSubmit={async (e) => {
-              await handleSubmit(e, text);
-              handleReset();
-            }}
-          />
-        )
-      )}
-      <List>
-        {filteredTodos.map((todo) => {
-          return (
-            <ListItem key={todo?.id} gap="4">
-              <TodoItem
-                todo={todo}
-                handleUpdate={(e) => handleUpdate(e, todo)}
-                handleComplete={() => handleComplete(todo)}
-                handleDiscard={() => handleDiscard(todo)}
-                handleRestore={() => handleRestore(todo)}
-              />
-            </ListItem>
-          );
-        })}
-      </List>
+      <Flex flexDirection="column" gap="4">
+        <Filter onChange={handleFilter} />
+        {filter === 'discarded' ? (
+          <button
+            onClick={handleAllDelete}
+            disabled={todos?.filter((todo) => todo.isDiscarded).length === 0}
+          >
+            ごみ箱を空にする
+          </button>
+        ) : (
+          filter !== 'completed' && (
+            <InputTodo
+              text={text}
+              onChange={handleOnChange}
+              onSubmit={async (e) => {
+                await handleSubmit(e, text);
+                handleReset();
+              }}
+            />
+          )
+        )}
+        <List>
+          {filteredTodos.map((todo) => {
+            return (
+              <ListItem key={todo?.id} gap="4">
+                <TodoItem
+                  todo={todo}
+                  handleUpdate={(e) => handleUpdate(e, todo)}
+                  handleComplete={() => handleComplete(todo)}
+                  handleDiscard={() => handleDiscard(todo)}
+                  handleRestore={() => handleRestore(todo)}
+                />
+              </ListItem>
+            );
+          })}
+        </List>
+      </Flex>
     </Container>
   );
 };
