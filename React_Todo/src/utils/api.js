@@ -4,7 +4,7 @@ import { API_BASE_URL } from "../config";
 export const fetcher = (URL) =>
   axios.get(API_BASE_URL + URL).then((res) => res.data);
 
-export const creteTodo = (todo) => {
+export const createTodo = (todo) => {
   axios.get(`${API_BASE_URL}/todos`, {
     title: todo.title,
     isCompleted: todo.isCompleted,
