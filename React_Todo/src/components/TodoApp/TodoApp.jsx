@@ -1,8 +1,9 @@
 import React from 'react';
-import { Filter, useFilter } from '../Filter';
+import { useFilter } from '../../hooks/useFilter';
+import { Filter } from '../Filter';
 import { InputTodo, useInputTodo } from '../InputTodo';
 import { TodoItem } from '../TodoItem';
-import { useTodos } from './';
+import { useTodo } from '../../hooks/useTodo';
 
 export const TodoApp = () => {
   const { text, handleOnChange, handleReset } = useInputTodo();
@@ -11,10 +12,10 @@ export const TodoApp = () => {
     todos,
     handleOnSubmit,
     handleOnEdit,
-    handleOnCheck,
-    handleOnRemove,
-    handleOnEmpty,
-  } = useTodos();
+    // handleOnCheck,
+    // handleOnRemove,
+    // handleOnEmpty,
+  } = useTodo();
 
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
@@ -30,6 +31,11 @@ export const TodoApp = () => {
         return todo;
     }
   });
+
+  if (!todos) return <div>loading</div>;
+
+  if (error) return <div>error</div>;
+
 
   return (
     <div>
