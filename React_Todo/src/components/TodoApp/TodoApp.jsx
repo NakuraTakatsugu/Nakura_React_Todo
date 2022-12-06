@@ -1,32 +1,35 @@
 import React from 'react';
 import { useFilter } from '../../hooks/useFilter';
 import { Filter } from '../Filter';
-import { InputTodo, useInputTodo } from '../InputTodo';
-import { TodoItem } from '../TodoItem';
 import { useTodo } from '../../hooks/useTodo';
+import { InputTodo } from '../InputTodo';
+import { useInputTodo } from '../../hooks/useInputTodo';
+import { TodoItem } from '../TodoItem';
 
 export const TodoApp = () => {
   const { text, handleOnChange, handleReset } = useInputTodo();
   const { filter, handleFilter } = useFilter();
   const {
     todos,
-    handleOnSubmit,
-    handleOnEdit,
-    // handleOnCheck,
-    // handleOnRemove,
-    // handleOnEmpty,
+    error,
+    handleSubmit,
+    handleUpdate,
+    handleComplete,
+    handleRestore,
+    handleDiscard,
+    handleAllDelete,
   } = useTodo();
 
-  const filteredTodos = todos.filter((todo) => {
+  const filteredTodos = todos?.filter((todo) => {
     switch (filter) {
       case 'all':
-        return !todo.removed;
-      case 'checked':
-        return todo.checked && !todo.removed;
-      case 'unchecked':
-        return !todo.checked && !todo.removed;
-      case 'removed':
-        return todo.removed;
+        return todo;
+      case 'completed':
+        return todo?.isCompleted;
+      case 'uncompleted':
+        return !todo?.isCompleted;
+      case 'discarded':
+        return todo?.isDiscarded;
       default:
         return todo;
     }
@@ -40,23 +43,22 @@ export const TodoApp = () => {
   return (
     <div>
       <Filter onChange={handleFilter} />
-      {filter === 'removed' ? (
+      {filter === 'discarded' ? (
         <button
-          onClick={handleOnEmpty}
-          disabled={todos.filter((todo) => todo.removed).length === 0}
+          onClick={handleAllDelete}
+          disabled={todos?.filter((todo) => todo.isDiscarded).length === 0}
         >
           ごみ箱を空にする
         </button>
       ) : (
-        filter !== 'checked' && (
+        filter !== 'completed' && (
           <InputTodo
             text={text}
             onChange={handleOnChange}
-            onSubmit={(e) => {
-              handleOnSubmit(e, text);
+            onSubmit={async(e) => {
+              await handleOnSubmit(e, text);
               handleReset();
             }}
-            handleReset={handleReset}
           />
         )
       )}
@@ -66,9 +68,10 @@ export const TodoApp = () => {
             <li key={todo.id}>
               <TodoItem
                 todo={todo}
-                handleOnCheck={() => handleOnCheck(todo.id, todo.checked)}
-                handleOnEdit={(e) => handleOnEdit(todo.id, e.target.value)}
-                handleOnRemove={() => handleOnRemove(todo.id, todo.removed)}
+                handleUpdate={(e) => handleUpdate(e,todo)}
+                handleComplete={() => handleComplete(todo)}
+                handleDiscard={() => handleDiscard(todo)}
+                handleRestore= {()=> handleRestore(todo)}
               />
             </li>
           );
