@@ -1,4 +1,5 @@
 {
   "/todos/:id/complete": "/todos/:id",
-  "/todos/:id/discard": "/todos/:id"
+  "/todos/:id/discard": "/todos/:id",
+  "/todos/:id/restore": "/todos/:id"
 }
