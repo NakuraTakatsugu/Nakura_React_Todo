@@ -7,7 +7,7 @@ import { useInputTodo } from '../../hooks/useInputTodo';
 import { TodoItem } from '../TodoItem';
 
 export const TodoApp = () => {
-  const { text, handleOnChange, handleReset } = useInputTodo();
+  const { text, handleChange, handleReset } = useInputTodo();
   const { filter, handleFilter } = useFilter();
   const {
     todos,
@@ -42,26 +42,14 @@ export const TodoApp = () => {
 
   return (
     <div>
-      <Filter onChange={handleFilter} />
-      {filter === 'discarded' ? (
-        <button
-          onClick={handleAllDelete}
-          disabled={todos?.filter((todo) => todo.isDiscarded).length === 0}
-        >
-          ごみ箱を空にする
-        </button>
-      ) : (
-        filter !== 'completed' && (
-          <InputTodo
-            text={text}
-            onChange={handleOnChange}
-            onSubmit={async(e) => {
-              await handleOnSubmit(e, text);
-              handleReset();
-            }}
-          />
-        )
-      )}
+      <InputTodo
+        text={text}
+        onChange={handleChange}
+        onSubmit={async(e) => {
+          await handleSubmit(e, text);
+          handleReset();
+        }}
+      />
       <ul>
         {filteredTodos.map((todo) => {
           return (

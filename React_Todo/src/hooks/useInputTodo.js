@@ -3,7 +3,7 @@ import { useState } from 'react';
 export const useInputTodo = () => {
   const [text, setText] = useState(String);
 
-  const handleOnChange = (e) => {
+  const handleChange = (e) => {
     setText(e.target.value);
   };
 
@@ -13,7 +13,7 @@ export const useInputTodo = () => {
 
   return {
     text,
-    handleOnChange,
+    handleChange,
     handleReset,
   };
 };

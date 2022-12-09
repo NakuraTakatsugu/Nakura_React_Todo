@@ -2,7 +2,9 @@ export const InputTodo = ({ text, onChange, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <input type="text" value={text} onChange={onChange} />
-      <input type="submit" value="追加" onSubmit={onSubmit} />
+      <button type="submit" onSubmit={onSubmit}>
+        追加
+      </button>
     </form>
   );
 };

@@ -16,6 +16,7 @@ export const updateTodo = (todo, value) => {
   const updateTodo = { ...todo, title: value };
 
   axios.put(`${API_BASE_URL}/todos/${todo.id}`, updateTodo);
+  console.log(todo.id);
 };
 
 export const completeTodo = (todo) => {

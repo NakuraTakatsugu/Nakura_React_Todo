@@ -1,3 +1,5 @@
+import { useToggle } from '../../hooks/useToggle';
+
 export const TodoItem = ({
   todo,
   handleDiscard,
@@ -5,18 +7,21 @@ export const TodoItem = ({
   handleComplete,
   handleRestore,
 }) => {
+  const [on, toggle] = useToggle();
+
   return (
     <>
       <input
         type="checkbox"
         checked={on}
-        onChange={handleToggle}
+        onChange={toggle}
         value={on}
       />
       <input
         type="text"
         value={todo?.title}
         onChange={handleUpdate}
+        disabled={on}
       />
       {!todo?.isCompleted && (
         <button onClick={handleComplete}>

@@ -18,7 +18,7 @@ export const useTodo = () => {
     if (!text) return;
 
     const newTodo = {
-      value: text,
+      title: text,
       isCompleted: false,
       isDiscarded:false,
       isChecked: false,
@@ -36,6 +36,7 @@ export const useTodo = () => {
   const handleUpdate = async (e,todo) => {
     try {
       const res = await updateTodo(todo, e.target.value);
+      console.log(todo.id);
       const filteredTodos = todos.filter((t) => t.id !== todo.id);
       mutate([...filteredTodos, res], false);
     } catch (err) {
