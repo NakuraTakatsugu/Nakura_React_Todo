@@ -16,6 +16,7 @@ export const TodoItem = ({
         checked={on}
         onChange={toggle}
         value={on}
+        onClick={handleComplete}
       />
       <input
         type="text"
@@ -23,7 +24,7 @@ export const TodoItem = ({
         onChange={handleUpdate}
         disabled={on}
       />
-      {!todo?.isCompleted && (
+      {!todo.isCompleted && (
         <button onClick={handleComplete}>
           完了
         </button>
@@ -37,7 +38,6 @@ export const TodoItem = ({
           削除
         </button>
       )}
-      <span>{todo?.title}</span>
     </>
   );
 };

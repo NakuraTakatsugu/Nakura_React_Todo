@@ -42,14 +42,26 @@ export const TodoApp = () => {
 
   return (
     <div>
-      <InputTodo
-        text={text}
-        onChange={handleChange}
-        onSubmit={async(e) => {
-          await handleSubmit(e, text);
-          handleReset();
-        }}
-      />
+      <Filter onChange={handleFilter} />
+      {filter === 'discarded' ? (
+        <button
+          onClick={handleAllDelete}
+          disabled={filteredTodos?.filter((todo) => todo.isDiscarded).length === 0}
+        >
+          ごみ箱を空にする
+        </button>
+      ) : (
+        filter !== 'completed' && (
+          <InputTodo
+            text={text}
+            onChange={handleChange}
+            onSubmit={async(e) => {
+              await handleSubmit(e, text);
+              handleReset();
+            }}
+          />
+        )
+      )}
       <ul>
         {filteredTodos.map((todo) => {
           return (
