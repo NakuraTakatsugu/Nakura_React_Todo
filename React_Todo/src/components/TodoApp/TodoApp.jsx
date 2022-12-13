@@ -5,14 +5,20 @@ import { useTodo } from '../../hooks/useTodo';
 import { InputTodo } from '../InputTodo';
 import { useInputTodo } from '../../hooks/useInputTodo';
 import { TodoItem } from '../TodoItem';
+import { useForm } from 'react-hook-form';
 
 export const TodoApp = () => {
   const { text, handleChange, handleReset } = useInputTodo();
   const { filter, handleFilter } = useFilter();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => console.log(data);
+  console.log(errors);
+
+
   const {
     todos,
     error,
-    handleSubmit,
+    // handleSubmit,
     handleUpdate,
     handleComplete,
     handleRestore,
@@ -42,6 +48,11 @@ export const TodoApp = () => {
 
   return (
     <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="title" {...register("title", {required: true, max: 30, maxLength: 26})} />
+
+        <input type="submit" />
+      </form>
       <Filter onChange={handleFilter} />
       {filter === 'discarded' ? (
         <button
