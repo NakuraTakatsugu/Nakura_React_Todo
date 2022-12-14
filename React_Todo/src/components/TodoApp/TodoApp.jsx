@@ -48,11 +48,6 @@ export const TodoApp = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="title" {...register("title", {required: true, max: 30, maxLength: 26})} />
-
-        <input type="submit" />
-      </form>
       <Filter onChange={handleFilter} />
       {filter === 'discarded' ? (
         <button
@@ -63,14 +58,23 @@ export const TodoApp = () => {
         </button>
       ) : (
         filter !== 'completed' && (
-          <InputTodo
-            text={text}
-            onChange={handleChange}
-            onSubmit={async(e) => {
-              await handleSubmit(e, text);
-              handleReset();
-            }}
-          />
+          // <InputTodo
+          //   text={text}
+          //   onChange={handleChange}
+          //   onSubmit={async(e) => {
+          //     await handleSubmit(e, text);
+          //     handleReset();
+          //   }}
+          // />
+          <form onSubmit={async(data) => {
+            await handleSubmit(data.text);
+            handleReset();
+          }}>
+        <input type="text" placeholder="title"
+          {...register("title", { required: true, max: 30, maxLength: 26 })}
+        />
+        <input type="submit" value="追加"/>
+      </form>
         )
       )}
       <ul>
